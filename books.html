@@ -9,14 +9,17 @@
     <title>Books | Reese Astor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar scrolled" id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">Reese Astor</a>
+            <a href="index.html" class="nav-logo">
+                Reese Astor
+                <span class="nav-logo-tagline">Author &amp; Storyteller</span>
+            </a>
             <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
                 <span class="hamburger"></span>
             </button>
@@ -25,6 +28,9 @@
                 <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="books.html" class="nav-link active">Books</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item nav-item-cta">
+                    <a href="index.html#newsletter" class="btn btn-pill">Stay in the Loop</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -32,16 +38,17 @@
     <!-- Page Header -->
     <header class="page-header">
         <div class="page-header-content">
-            <p class="section-subtitle" style="color: var(--color-accent);">Literary Collection</p>
+            <span class="section-chip">Literary Collection</span>
             <h1 class="page-title">My Books</h1>
             <p class="page-subtitle">Stories crafted with love, waiting to be discovered</p>
         </div>
     </header>
 
     <!-- Books Section -->
-    <section class="about-section">
+    <section class="about-section fade-on-scroll">
         <div class="container">
-            <div class="books-grid">
+            <div class="section-shell">
+                <div class="books-grid">
                 <!-- Book 1: The Midnight Garden -->
                 <article class="book-card">
                     <div class="book-cover">
@@ -147,47 +154,51 @@
     </section>
 
     <!-- Featured Quote -->
-    <section class="testimonials">
+    <section class="testimonials fade-on-scroll">
         <div class="container">
-            <div class="section-header centered">
-                <span class="section-subtitle">Author's Note</span>
-                <h2 class="section-title">On Storytelling</h2>
-            </div>
-            <div class="testimonial-grid" style="grid-template-columns: 1fr;">
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text" style="font-size: 1.4rem; max-width: 800px; margin: 0 auto var(--spacing-md);">
-                        Each book is a conversation between the page and the heart. I write 
-                        the words, but you, dear reader, breathe life into them. Together, 
-                        we create something that neither of us could make alone.
-                    </p>
-                    <cite class="testimonial-author">— Reese Astor</cite>
+            <div class="section-shell">
+                <div class="section-header centered">
+                    <span class="section-chip">Author's Note</span>
+                    <h2 class="section-title">On Storytelling</h2>
+                </div>
+                <div class="testimonial-grid" style="grid-template-columns: 1fr;">
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text" style="font-size: 1.4rem; max-width: 800px; margin: 0 auto var(--spacing-md);">
+                            Each book is a conversation between the page and the heart. I write 
+                            the words, but you, dear reader, breathe life into them. Together, 
+                            we create something that neither of us could make alone.
+                        </p>
+                        <cite class="testimonial-author">— Reese Astor</cite>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Newsletter Section -->
-    <section class="newsletter" id="newsletter">
+    <section class="newsletter fade-on-scroll" id="newsletter">
         <div class="container">
-            <div class="newsletter-content">
-                <span class="section-subtitle">Stay Connected</span>
-                <h2 class="section-title">Be the First to Know</h2>
-                <p class="newsletter-description">
-                    Get exclusive early access to cover reveals, chapter previews, and release 
-                    announcements. Plus, receive a free short story when you subscribe.
-                </p>
-                <form class="newsletter-form" action="#" method="post">
-                    <div class="form-group">
-                        <input type="email" 
-                               class="form-input" 
-                               placeholder="Enter your email address" 
-                               required
-                               aria-label="Email address">
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </div>
-                    <p class="form-note">Your privacy matters. Unsubscribe anytime.</p>
-                </form>
+            <div class="section-shell newsletter-shell">
+                <div class="newsletter-content">
+                    <span class="section-chip">Stay Connected</span>
+                    <h2 class="section-title">Be the First to Know</h2>
+                    <p class="newsletter-description">
+                        Get exclusive early access to cover reveals, chapter previews, and release 
+                        announcements. Plus, receive a free short story when you subscribe.
+                    </p>
+                    <form class="newsletter-form" action="#" method="post">
+                        <div class="form-group">
+                            <input type="email" 
+                                   class="form-input" 
+                                   placeholder="Enter your email address" 
+                                   required
+                                   aria-label="Email address">
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                        <p class="form-note">Your privacy matters. Unsubscribe anytime.</p>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
