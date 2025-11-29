@@ -9,14 +9,17 @@
     <title>Reese Astor | Award-Winning Author</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">Reese Astor</a>
+            <a href="index.html" class="nav-logo">
+                Reese Astor
+                <span class="nav-logo-tagline">Author &amp; Storyteller</span>
+            </a>
             <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
                 <span class="hamburger"></span>
             </button>
@@ -25,20 +28,64 @@
                 <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="books.html" class="nav-link">Books</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item nav-item-cta">
+                    <a href="#newsletter" class="btn btn-pill">Stay in the Loop</a>
+                </li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <p class="hero-subtitle">Welcome to the world of</p>
-            <h1 class="hero-title">Reese Astor</h1>
-            <p class="hero-tagline">Crafting stories that linger in your heart</p>
-            <div class="hero-cta">
-                <a href="books.html" class="btn btn-primary">Explore My Books</a>
-                <a href="#newsletter" class="btn btn-secondary">Join the Journey</a>
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="container hero-layout">
+            <div class="hero-intro fade-on-scroll">
+                <span class="hero-eyebrow">Worlds born at midnight hours</span>
+                <h1 class="hero-title">Reese Astor</h1>
+                <p class="hero-lede">
+                    Award-winning author crafting lyrical fiction where memory, magic, and heart collide.
+                    Every page is designed to feel like a secret you were meant to find.
+                </p>
+                <div class="hero-cta">
+                    <a href="books.html" class="btn btn-primary">Explore My Books</a>
+                    <a href="#newsletter" class="btn btn-ghost">Join the Journey</a>
+                </div>
+                <div class="hero-meta-grid">
+                    <div class="hero-meta-card">
+                        <span class="hero-meta-label">Novels</span>
+                        <strong>6 Published</strong>
+                        <small>Stories across continents</small>
+                    </div>
+                    <div class="hero-meta-card">
+                        <span class="hero-meta-label">Honors</span>
+                        <strong>9 Awards</strong>
+                        <small>Critics &amp; reader favorites</small>
+                    </div>
+                    <div class="hero-meta-card">
+                        <span class="hero-meta-label">Readers</span>
+                        <strong>250K+</strong>
+                        <small>Subscribers &amp; book clubs</small>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-showcase fade-on-scroll">
+                <div class="hero-card surface-panel">
+                    <div class="hero-card-label">Latest release</div>
+                    <h3>The Midnight Garden</h3>
+                    <p>
+                        "Some gardens only bloom at midnight, when the world has forgotten to watch."
+                        An immersive tale of untold histories, luminous secrets, and love reborn.
+                    </p>
+                    <div class="hero-card-footer">
+                        <span class="hero-chip">Contemporary Fiction</span>
+                        <a href="books.html" class="btn btn-inline">Read more</a>
+                    </div>
+                </div>
+                <div class="hero-pill hero-pill--accent">
+                    <span>Next novel</span>
+                    <strong>Spring 2025</strong>
+                    <p>Subscribers receive the prologue before it goes public.</p>
+                </div>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -48,126 +95,143 @@
     </header>
 
     <!-- Featured Book Section -->
-    <section class="featured-book">
+    <section class="featured-book fade-on-scroll">
         <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Latest Release</span>
-                <h2 class="section-title">The Midnight Garden</h2>
-            </div>
-            <div class="featured-content">
-                <div class="book-cover">
-                    <div class="book-cover-placeholder">
-                        <span class="book-title-display">The Midnight Garden</span>
-                        <span class="book-author-display">Reese Astor</span>
-                    </div>
-                </div>
-                <div class="book-details">
-                    <blockquote class="book-quote">
-                        "Some gardens only bloom at midnight, when the world has forgotten to watch."
-                    </blockquote>
-                    <p class="book-description">
-                        In this captivating tale of love, loss, and rediscovery, Reese Astor weaves a 
-                        mesmerizing narrative that explores the hidden corners of the human heart. 
-                        When Elena discovers her grandmother's secret garden, she unlocks not just 
-                        its iron gates, but doors to a past that will transform her future.
+            <div class="section-shell">
+                <div class="section-header">
+                    <span class="section-chip">Latest Release</span>
+                    <h2 class="section-title">The Midnight Garden</h2>
+                    <p class="section-lead">
+                        A luminous story about the memories we inherit and the love we choose to keep.
                     </p>
-                    <div class="book-meta">
-                        <span class="meta-item">Contemporary Fiction</span>
-                        <span class="meta-divider">•</span>
-                        <span class="meta-item">368 Pages</span>
-                        <span class="meta-divider">•</span>
-                        <span class="meta-item">Available Now</span>
+                </div>
+                <div class="featured-content">
+                    <div class="book-cover">
+                        <div class="book-cover-placeholder">
+                            <span class="book-title-display">The Midnight Garden</span>
+                            <span class="book-author-display">Reese Astor</span>
+                        </div>
+                        <span class="book-badge">Signed editions shipping now</span>
                     </div>
-                    <a href="books.html" class="btn btn-primary">Read More</a>
+                    <div class="book-details">
+                        <blockquote class="book-quote">
+                            "Some gardens only bloom at midnight, when the world has forgotten to watch."
+                        </blockquote>
+                        <p class="book-description">
+                            When Elena discovers her grandmother's locked garden, she steps into a world
+                            preserved in moonlight. Each chapter reveals another letter, another memory,
+                            another chance to rewrite a family's future.
+                        </p>
+                        <div class="book-meta">
+                            <span class="meta-item">Contemporary Fiction</span>
+                            <span class="meta-divider">•</span>
+                            <span class="meta-item">368 Pages</span>
+                            <span class="meta-divider">•</span>
+                            <span class="meta-item">Available Now</span>
+                        </div>
+                        <a href="books.html" class="btn btn-primary">Read More</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Preview Section -->
-    <section class="about-preview">
+    <section class="about-preview fade-on-scroll">
         <div class="container">
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="image-placeholder">
-                        <span class="placeholder-text">RA</span>
+            <div class="section-shell">
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="image-placeholder">
+                            <span class="placeholder-text">RA</span>
+                        </div>
+                        <div class="image-floating-note">
+                            <span>Currently drafting</span>
+                            <strong>Untitled Novel</strong>
+                        </div>
                     </div>
-                </div>
-                <div class="about-text">
-                    <span class="section-subtitle">About the Author</span>
-                    <h2 class="section-title">A Passion for Storytelling</h2>
-                    <p>
-                        Reese Astor is an award-winning author whose novels have touched readers 
-                        across the globe. With a gift for creating deeply resonant characters and 
-                        immersive worlds, Reese's writing explores themes of identity, belonging, 
-                        and the transformative power of human connection.
-                    </p>
-                    <p>
-                        When not writing, Reese can be found wandering through old bookshops, 
-                        tending to an ever-growing collection of houseplants, or dreaming up the 
-                        next story to share with the world.
-                    </p>
-                    <a href="about.html" class="btn btn-text">Discover My Story <span class="arrow">→</span></a>
+                    <div class="about-text">
+                        <span class="section-chip">About the Author</span>
+                        <h2 class="section-title">A Passion for Storytelling</h2>
+                        <p>
+                            Reese Astor's novels explore the alchemy between memory and imagination.
+                            Known for cinematic prose and intimate characters, Reese invites readers
+                            into richly textured worlds where every chapter feels inevitable yet
+                            surprising.
+                        </p>
+                        <p>
+                            When not writing, Reese is usually sketching plotlines in sunlit cafes,
+                            cataloging vintage editions, or nurturing a sprawling greenhouse of herbs
+                            that inspire sensory detail on the page.
+                        </p>
+                        <a href="about.html" class="btn btn-inline">Discover My Story <span class="arrow">→</span></a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials">
+    <section class="testimonials fade-on-scroll">
         <div class="container">
-            <div class="section-header centered">
-                <span class="section-subtitle">Praise</span>
-                <h2 class="section-title">What Readers Are Saying</h2>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text">
-                        Reese Astor writes with the kind of luminous prose that makes you pause 
-                        mid-paragraph, just to savor the beauty of a sentence.
-                    </p>
-                    <cite class="testimonial-author">— Literary Review Weekly</cite>
+            <div class="section-shell">
+                <div class="section-header centered">
+                    <span class="section-chip">Praise</span>
+                    <h2 class="section-title">What Readers Are Saying</h2>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text">
-                        A masterful storyteller. Each novel is a journey I never want to end.
-                    </p>
-                    <cite class="testimonial-author">— Book Club Monthly</cite>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text">
-                        The characters live and breathe on every page. Simply unforgettable.
-                    </p>
-                    <cite class="testimonial-author">— Readers' Choice Awards</cite>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">
+                            Reese Astor writes with the kind of luminous prose that makes you pause
+                            mid-paragraph, just to savor the beauty of a sentence.
+                        </p>
+                        <cite class="testimonial-author">— Literary Review Weekly</cite>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">
+                            A masterful storyteller. Each novel is a journey I never want to end.
+                        </p>
+                        <cite class="testimonial-author">— Book Club Monthly</cite>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">
+                            The characters live and breathe on every page. Simply unforgettable.
+                        </p>
+                        <cite class="testimonial-author">— Readers' Choice Awards</cite>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Newsletter Section -->
-    <section class="newsletter" id="newsletter">
+    <section class="newsletter fade-on-scroll" id="newsletter">
         <div class="container">
-            <div class="newsletter-content">
-                <span class="section-subtitle">Stay Connected</span>
-                <h2 class="section-title">Join the Inner Circle</h2>
-                <p class="newsletter-description">
-                    Be the first to know about new releases, exclusive content, and behind-the-scenes 
-                    glimpses into the writing life. Plus, receive a free short story when you subscribe.
-                </p>
-                <form class="newsletter-form" action="#" method="post">
-                    <div class="form-group">
-                        <input type="email" 
-                               class="form-input" 
-                               placeholder="Enter your email address" 
-                               required
-                               aria-label="Email address">
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </div>
-                    <p class="form-note">Your privacy matters. Unsubscribe anytime.</p>
-                </form>
+            <div class="section-shell newsletter-shell">
+                <div class="newsletter-content">
+                    <span class="section-chip">Stay Connected</span>
+                    <h2 class="section-title">Join the Inner Circle</h2>
+                    <p class="newsletter-description">
+                        Receive early chapters, annotated playlists, and behind-the-scenes notes from the drafting desk.
+                        Every newsletter includes a micro-essay about the creative process.
+                    </p>
+                    <form class="newsletter-form" action="#" method="post">
+                        <div class="form-group">
+                            <input type="email" 
+                                   class="form-input" 
+                                   placeholder="Enter your email address" 
+                                   required
+                                   aria-label="Email address">
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                        <p class="form-note">
+                            No spam—just beautifully crafted updates. Unsubscribe anytime.
+                        </p>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
