@@ -6,15 +6,49 @@
     <meta name="description" content="Get in touch with Reese Astor. For media inquiries, speaking engagements, or reader messages.">
     <meta name="keywords" content="Reese Astor contact, author contact, media inquiries, speaking engagements">
     <meta name="author" content="Reese Astor">
-    <title>Contact | Reese Astor</title>
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#04060f">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reeseastor.com/contact.html">
+    <meta property="og:title" content="Contact | Reese Astor">
+    <meta property="og:description" content="Get in touch with Reese Astor. For media inquiries, speaking engagements, or reader messages.">
+    <meta property="og:image" content="https://reeseastor.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://reeseastor.com/contact.html">
+    <meta name="twitter:title" content="Contact | Reese Astor">
+    <meta name="twitter:description" content="Get in touch with Reese Astor.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://reeseastor.com/contact.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <!-- Fonts with display swap for performance -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <!-- Navigation -->
-    <nav class="navbar scrolled" id="navbar">
+    <nav class="navbar scrolled" id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
                 Reese Astor
@@ -35,8 +69,10 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
+    <main id="main-content">
     <!-- Page Header -->
-    <header class="page-header">
+    <header class="page-header" role="banner">
         <div class="page-header-content">
             <span class="section-chip">Let's Connect</span>
             <h1 class="page-title">Contact</h1>
@@ -88,7 +124,7 @@
                         </div>
                     </div>
                     
-                    <form class="contact-form" action="#" method="post">
+                    <form class="contact-form" action="#" method="post" novalidate>
                         <div class="form-field">
                             <label class="form-label" for="name">Your Name</label>
                             <input type="text" 
@@ -96,7 +132,11 @@
                                    name="name" 
                                    class="form-control" 
                                    required
-                                   placeholder="Jane Smith">
+                                   aria-required="true"
+                                   aria-describedby="name-error"
+                                   placeholder="Jane Smith"
+                                   autocomplete="name">
+                            <span id="name-error" class="error-message" role="alert" aria-live="polite"></span>
                         </div>
                         
                         <div class="form-field">
@@ -106,12 +146,21 @@
                                    name="email" 
                                    class="form-control" 
                                    required
-                                   placeholder="jane@example.com">
+                                   aria-required="true"
+                                   aria-describedby="email-error"
+                                   placeholder="jane@example.com"
+                                   autocomplete="email">
+                            <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
                         </div>
                         
                         <div class="form-field">
                             <label class="form-label" for="subject">Subject</label>
-                            <select id="subject" name="subject" class="form-control" required>
+                            <select id="subject" 
+                                    name="subject" 
+                                    class="form-control" 
+                                    required
+                                    aria-required="true"
+                                    aria-describedby="subject-error">
                                 <option value="">Select a topic</option>
                                 <option value="reader">Reader Message</option>
                                 <option value="bookclub">Book Club Inquiry</option>
@@ -119,6 +168,7 @@
                                 <option value="speaking">Speaking Engagement</option>
                                 <option value="other">Other</option>
                             </select>
+                            <span id="subject-error" class="error-message" role="alert" aria-live="polite"></span>
                         </div>
                         
                         <div class="form-field">
@@ -127,10 +177,14 @@
                                       name="message" 
                                       class="form-control" 
                                       required
-                                      placeholder="Share your thoughts..."></textarea>
+                                      aria-required="true"
+                                      aria-describedby="message-error"
+                                      placeholder="Share your thoughts..."
+                                      rows="6"></textarea>
+                            <span id="message-error" class="error-message" role="alert" aria-live="polite"></span>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" aria-label="Submit contact form">
                             Send Message
                         </button>
                     </form>
@@ -238,6 +292,7 @@
             </div>
         </div>
     </footer>
+    </main>
 
     <script src="js/main.js"></script>
 </body>

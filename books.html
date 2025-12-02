@@ -6,15 +6,75 @@
     <meta name="description" content="Explore the captivating novels of Reese Astor. From contemporary fiction to literary masterpieces, discover stories that will stay with you.">
     <meta name="keywords" content="Reese Astor books, novels, contemporary fiction, literary fiction, book collection">
     <meta name="author" content="Reese Astor">
-    <title>Books | Reese Astor</title>
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#04060f">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reeseastor.com/books.html">
+    <meta property="og:title" content="Books | Reese Astor">
+    <meta property="og:description" content="Explore the captivating novels of Reese Astor. From contemporary fiction to literary masterpieces.">
+    <meta property="og:image" content="https://reeseastor.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://reeseastor.com/books.html">
+    <meta name="twitter:title" content="Books | Reese Astor">
+    <meta name="twitter:description" content="Explore the captivating novels of Reese Astor.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://reeseastor.com/books.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <!-- Fonts with display swap for performance -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Structured Data for Books -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Books by Reese Astor",
+      "description": "Collection of novels by award-winning author Reese Astor",
+      "url": "https://reeseastor.com/books.html",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "Book",
+            "name": "The Midnight Garden",
+            "author": {
+              "@type": "Person",
+              "name": "Reese Astor"
+            },
+            "datePublished": "2023",
+            "genre": "Contemporary Fiction"
+          }
+        ]
+      }
+    }
+    </script>
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <!-- Navigation -->
-    <nav class="navbar scrolled" id="navbar">
+    <nav class="navbar scrolled" id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
                 Reese Astor
@@ -35,8 +95,10 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
+    <main id="main-content">
     <!-- Page Header -->
-    <header class="page-header">
+    <header class="page-header" role="banner">
         <div class="page-header-content">
             <span class="section-chip">Literary Collection</span>
             <h1 class="page-title">My Books</h1>
@@ -240,6 +302,7 @@
             </div>
         </div>
     </footer>
+    </main>
 
     <script src="js/main.js"></script>
 </body>
