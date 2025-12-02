@@ -1,59 +1,116 @@
 /**
  * Reese Astor - Luxury Author Website
  * Main JavaScript file
+ * Enhanced with error handling, accessibility, and performance optimizations
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.body.classList.add('js-ready');
-    // Initialize all components
-    initNavigation();
-    initScrollEffects();
-    initFormHandling();
-});
+(function() {
+    'use strict';
+
+    // Check if browser supports required features
+    if (!('IntersectionObserver' in window)) {
+        console.warn('IntersectionObserver not supported, scroll animations may not work');
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+    function init() {
+        try {
+            document.body.classList.add('js-ready');
+            initNavigation();
+            initScrollEffects();
+            initFormHandling();
+            initServiceWorker();
+            initKeyboardNavigation();
+        } catch (error) {
+            console.error('Error initializing application:', error);
+        }
+    }
+})();
 
 /**
- * Navigation functionality
+ * Navigation functionality with enhanced accessibility
  */
 function initNavigation() {
     const navbar = document.getElementById('navbar');
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
     
-    // Mobile menu toggle
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu when clicking on a link
-        const navLinks = navMenu.querySelectorAll('.nav-link');
-        navLinks.forEach(function(link) {
-            link.addEventListener('click', function() {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
+    if (!navbar || !navToggle || !navMenu) {
+        return;
     }
     
-    // Navbar scroll effect
-    if (navbar) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+    // Mobile menu toggle with ARIA updates
+    navToggle.addEventListener('click', function() {
+        const isActive = navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
         
-        // Check initial scroll position
+        // Update ARIA attributes
+        navToggle.setAttribute('aria-expanded', isActive);
+        navMenu.setAttribute('aria-hidden', !isActive);
+        
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = isActive ? 'hidden' : '';
+        
+        // Focus management
+        if (isActive) {
+            const firstLink = navMenu.querySelector('.nav-link');
+            if (firstLink) {
+                firstLink.focus();
+            }
+        }
+    });
+    
+    // Close menu when clicking on a link
+    const navLinks = navMenu.querySelectorAll('.nav-link');
+    navLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+            navMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Close menu on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+            navMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            navToggle.focus();
+        }
+    });
+    
+    // Navbar scroll effect with throttling for performance
+    let ticking = false;
+    function updateNavbar() {
         if (window.scrollY > 100) {
             navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
+        ticking = false;
+    }
+    
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateNavbar);
+            ticking = true;
+        }
+    }, { passive: true });
+    
+    // Check initial scroll position
+    if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
     }
 }
 
@@ -102,43 +159,174 @@ function initScrollEffects() {
 }
 
 /**
- * Form handling
+ * Enhanced form handling with validation and accessibility
  */
 function initFormHandling() {
     // Newsletter form
     const newsletterForm = document.querySelector('.newsletter-form');
     if (newsletterForm) {
+        const emailInput = newsletterForm.querySelector('input[type="email"]');
+        const submitButton = newsletterForm.querySelector('button[type="submit"]');
+        
+        // Real-time email validation
+        if (emailInput) {
+            emailInput.addEventListener('blur', function() {
+                validateEmail(this);
+            });
+            
+            emailInput.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    validateEmail(this);
+                }
+            });
+        }
+        
         newsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const emailInput = this.querySelector('input[type="email"]');
             
-            if (emailInput && emailInput.value) {
-                // Show success message (in a real implementation, this would submit to a server)
-                showNotification('Thank you for subscribing! Check your email for a confirmation.');
-                emailInput.value = '';
+            if (!emailInput || !emailInput.value) {
+                showNotification('Please enter your email address.', 'error');
+                emailInput?.focus();
+                return;
             }
+            
+            if (!validateEmail(emailInput)) {
+                showNotification('Please enter a valid email address.', 'error');
+                emailInput.focus();
+                return;
+            }
+            
+            // Disable submit button during processing
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.classList.add('loading');
+                submitButton.textContent = 'Subscribing...';
+            }
+            
+            // Simulate API call (replace with actual implementation)
+            setTimeout(function() {
+                showNotification('Thank you for subscribing! Check your email for a confirmation.', 'success');
+                newsletterForm.reset();
+                
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('loading');
+                    submitButton.textContent = 'Subscribe';
+                }
+            }, 1000);
         });
     }
     
     // Contact form
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
+        const inputs = contactForm.querySelectorAll('input, textarea, select');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        
+        // Real-time validation
+        inputs.forEach(function(input) {
+            input.addEventListener('blur', function() {
+                validateField(this);
+            });
+            
+            input.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    validateField(this);
+                }
+            });
+        });
+        
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
+            let isValid = true;
+            inputs.forEach(function(input) {
+                if (!validateField(input)) {
+                    isValid = false;
+                }
+            });
             
-            // Basic validation
-            if (data.name && data.email && data.message) {
-                // Show success message (in a real implementation, this would submit to a server)
-                showNotification('Thank you for your message! I will get back to you soon.');
-                this.reset();
-            } else {
-                showNotification('Please fill in all required fields.', 'error');
+            if (!isValid) {
+                showNotification('Please fill in all required fields correctly.', 'error');
+                const firstError = contactForm.querySelector('.error');
+                if (firstError) {
+                    firstError.focus();
+                }
+                return;
             }
+            
+            // Disable submit button during processing
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.classList.add('loading');
+                submitButton.textContent = 'Sending...';
+            }
+            
+            // Simulate API call (replace with actual implementation)
+            setTimeout(function() {
+                showNotification('Thank you for your message! I will get back to you soon.', 'success');
+                contactForm.reset();
+                
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('loading');
+                    submitButton.textContent = 'Send Message';
+                }
+            }, 1500);
         });
+    }
+}
+
+/**
+ * Validate email field
+ */
+function validateEmail(input) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValid = emailRegex.test(input.value);
+    const errorElement = document.getElementById(input.id + '-error');
+    
+    if (input.value && !isValid) {
+        input.classList.add('error');
+        input.setAttribute('aria-invalid', 'true');
+        if (errorElement) {
+            errorElement.textContent = 'Please enter a valid email address.';
+        }
+        return false;
+    } else {
+        input.classList.remove('error');
+        input.setAttribute('aria-invalid', 'false');
+        if (errorElement) {
+            errorElement.textContent = '';
+        }
+        return true;
+    }
+}
+
+/**
+ * Validate form field
+ */
+function validateField(input) {
+    const isRequired = input.hasAttribute('required');
+    const isEmpty = !input.value.trim();
+    const errorElement = document.getElementById(input.id + '-error');
+    
+    if (isRequired && isEmpty) {
+        input.classList.add('error');
+        input.setAttribute('aria-invalid', 'true');
+        if (errorElement) {
+            const fieldName = input.previousElementSibling?.textContent || 'This field';
+            errorElement.textContent = fieldName + ' is required.';
+        }
+        return false;
+    } else if (input.type === 'email' && input.value) {
+        return validateEmail(input);
+    } else {
+        input.classList.remove('error');
+        input.setAttribute('aria-invalid', 'false');
+        if (errorElement) {
+            errorElement.textContent = '';
+        }
+        return true;
     }
 }
 
@@ -189,6 +377,90 @@ function showNotification(message, type) {
 }
 
 /**
+ * Initialize keyboard navigation enhancements
+ */
+function initKeyboardNavigation() {
+    // Trap focus in mobile menu
+    const navMenu = document.getElementById('nav-menu');
+    if (!navMenu) return;
+    
+    const focusableElements = navMenu.querySelectorAll(
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])'
+    );
+    
+    if (focusableElements.length === 0) return;
+    
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    
+    navMenu.addEventListener('keydown', function(e) {
+        if (!navMenu.classList.contains('active')) return;
+        
+        if (e.key === 'Tab') {
+            if (e.shiftKey && document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            } else if (!e.shiftKey && document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
+    });
+}
+
+/**
+ * Initialize Service Worker for PWA capabilities
+ */
+function initServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('ServiceWorker registration successful:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('ServiceWorker registration failed:', error);
+                });
+        });
+    }
+}
+
+/**
+ * Privacy-friendly analytics placeholder
+ * Replace with your preferred analytics solution (e.g., Plausible, Fathom, or Google Analytics)
+ * This is a placeholder that respects user privacy
+ */
+function initAnalytics() {
+    // Example: Privacy-friendly analytics
+    // Only initialize if user hasn't opted out
+    if (localStorage.getItem('analytics-opt-out') === 'true') {
+        return;
+    }
+    
+    // Placeholder for analytics initialization
+    // Replace with your actual analytics code
+    // Example:
+    // if (typeof plausible !== 'undefined') {
+    //     plausible('pageview');
+    // }
+    
+    // Track page views (replace with your analytics)
+    if (typeof window.analytics !== 'undefined') {
+        window.analytics.track('Page View', {
+            page: window.location.pathname,
+            title: document.title
+        });
+    }
+}
+
+// Initialize analytics after page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnalytics);
+} else {
+    initAnalytics();
+}
+
+/**
  * Set active navigation link based on current page
  */
 (function() {
@@ -199,8 +471,10 @@ function showNotification(message, type) {
         const href = link.getAttribute('href');
         if (href === currentPage || (currentPage === '' && href === 'index.html')) {
             link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
         } else {
             link.classList.remove('active');
+            link.removeAttribute('aria-current');
         }
     });
 })();

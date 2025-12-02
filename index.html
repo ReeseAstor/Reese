@@ -6,15 +6,74 @@
     <meta name="description" content="Reese Astor - Award-winning author of contemporary fiction. Discover captivating stories that transport you to extraordinary worlds.">
     <meta name="keywords" content="Reese Astor, author, novelist, fiction, books, contemporary fiction">
     <meta name="author" content="Reese Astor">
-    <title>Reese Astor | Award-Winning Author</title>
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#04060f">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reeseastor.com/">
+    <meta property="og:title" content="Reese Astor | Award-Winning Author">
+    <meta property="og:description" content="Award-winning author crafting lyrical fiction where memory, magic, and heart collide. Every page is designed to feel like a secret you were meant to find.">
+    <meta property="og:image" content="https://reeseastor.com/images/og-image.jpg">
+    <meta property="og:site_name" content="Reese Astor">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://reeseastor.com/">
+    <meta name="twitter:title" content="Reese Astor | Award-Winning Author">
+    <meta name="twitter:description" content="Award-winning author crafting lyrical fiction where memory, magic, and heart collide.">
+    <meta name="twitter:image" content="https://reeseastor.com/images/twitter-card.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://reeseastor.com/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <!-- Fonts with display swap for performance -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Reese Astor",
+      "jobTitle": "Author",
+      "description": "Award-winning author of contemporary fiction",
+      "url": "https://reeseastor.com",
+      "sameAs": [
+        "https://instagram.com/reeseastor",
+        "https://twitter.com/reeseastor",
+        "https://goodreads.com/reeseastor"
+      ],
+      "knowsAbout": ["Contemporary Fiction", "Literary Fiction", "Writing"],
+      "award": [
+        "National Book Award Longlist",
+        "Readers' Choice Awards - Best Fiction",
+        "Critics Circle - Notable Book of the Year"
+      ]
+    }
+    </script>
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
                 Reese Astor
@@ -35,8 +94,10 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
+    <main id="main-content">
     <!-- Hero Section -->
-    <header class="hero">
+    <header class="hero" role="banner">
         <div class="hero-glow" aria-hidden="true"></div>
         <div class="container hero-layout">
             <div class="hero-intro fade-on-scroll">
@@ -273,6 +334,7 @@
             </div>
         </div>
     </footer>
+    </main>
 
     <script src="js/main.js"></script>
 </body>

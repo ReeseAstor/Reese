@@ -1,0 +1,27 @@
+{
+  "name": "Reese Astor - Award-Winning Author",
+  "short_name": "Reese Astor",
+  "description": "Award-winning author of contemporary fiction. Discover captivating stories that transport you to extraordinary worlds.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#04060f",
+  "theme_color": "#04060f",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["books", "literature", "entertainment"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

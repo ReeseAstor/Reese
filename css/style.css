@@ -809,9 +809,43 @@ section {
     background: rgba(255, 255, 255, 0.08);
 }
 
+.form-input.error,
+.form-control.error {
+    border-color: rgba(231, 76, 60, 0.7);
+    background: rgba(231, 76, 60, 0.05);
+}
+
+.form-input.error:focus,
+.form-control.error:focus {
+    border-color: rgba(231, 76, 60, 0.9);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
 .form-note {
     font-size: 0.8rem;
     color: var(--color-text-soft);
+}
+
+.form-field {
+    margin-bottom: var(--space-md);
+}
+
+.error-message {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(231, 76, 60, 0.9);
+    margin-top: 0.4rem;
+    min-height: 1.2rem;
+}
+
+.error-message:empty {
+    display: none;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .contact-grid {
@@ -1090,10 +1124,65 @@ textarea.form-control {
     }
 }
 
+/* Skip link for accessibility */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--color-primary);
+    color: #080b18;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    z-index: 10000;
+    font-weight: 600;
+    border-radius: 0 0 8px 0;
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: inherit;
+}
+
+/* Smooth scroll behavior */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
