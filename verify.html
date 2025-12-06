@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Subscription - Reese Astor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .verify-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+        .verify-card {
+            background: var(--color-panel);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            text-align: center;
+        }
+        .verify-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .verify-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-family: var(--font-serif);
+        }
+        .verify-message {
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-container">
+        <div class="verify-card" id="verify-card">
+            <div class="verify-icon">✉️</div>
+            <h1 class="verify-title">Verifying Your Subscription</h1>
+            <div class="verify-message" id="message">
+                Please wait...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        
+        // Get token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        if (!token) {
+            document.getElementById('message').textContent = 'Invalid verification link. Please check your email for the correct link.';
+            document.getElementById('message').style.color = 'var(--color-text-muted)';
+        } else {
+            // Verify subscription
+            fetch(`${API_BASE}/api/verify/${token}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('verify-icon').textContent = '✅';
+                        document.getElementById('message').textContent = 'Your email has been verified! You\'re now subscribed to Reese Astor\'s newsletter.';
+                        document.getElementById('message').style.color = 'var(--color-tertiary)';
+                        
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 3000);
+                    } else {
+                        document.getElementById('message').textContent = data.error || 'Verification failed. Please try again.';
+                        document.getElementById('message').style.color = '#e74c3c';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('message').textContent = 'An error occurred. Please try again later.';
+                    document.getElementById('message').style.color = '#e74c3c';
+                });
+        }
+    </script>
+</body>
+</html>

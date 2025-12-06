@@ -203,7 +203,7 @@ function initFormHandling() {
                 submitButton.textContent = 'Subscribing...';
             }
             
-            // API call to subscribe
+            // API call to subscribe (with double opt-in)
             const API_BASE = window.location.origin;
             fetch(API_BASE + '/api/subscribe', {
                 method: 'POST',
@@ -217,7 +217,7 @@ function initFormHandling() {
             })
             .then(function(data) {
                 if (data.success) {
-                    showNotification(data.message || 'Thank you for subscribing! Check your email for a confirmation.', 'success');
+                    showNotification(data.message || 'Please check your email to verify your subscription.', 'success');
                     newsletterForm.reset();
                 } else {
                     showNotification(data.error || 'An error occurred. Please try again.', 'error');
