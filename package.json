@@ -1,7 +1,7 @@
 {
   "name": "reese-astor-newsletter-system",
-  "version": "1.0.0",
-  "description": "Complete newsletter system for Reese Astor author website",
+  "version": "2.0.0",
+  "description": "Professional newsletter system for Reese Astor author website with double opt-in, analytics, and advanced features",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -20,7 +20,11 @@
     "body-parser": "^1.20.2",
     "nodemailer": "^6.9.7",
     "uuid": "^9.0.1",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "express-rate-limit": "^7.1.5",
+    "express-basic-auth": "^1.7.1",
+    "node-cron": "^3.0.3",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

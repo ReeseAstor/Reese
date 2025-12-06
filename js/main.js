@@ -498,3 +498,27 @@ if (document.readyState === 'loading') {
         }
     });
 })();
+
+/**
+ * Handle URL parameters for subscription confirmation messages
+ */
+(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get('message');
+    const error = urlParams.get('error');
+    
+    if (message === 'subscription_confirmed') {
+        showNotification('Your subscription has been confirmed! Welcome to the inner circle.', 'success');
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (message === 'already_confirmed') {
+        showNotification('Your subscription is already confirmed. You\'re all set!', 'success');
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (error === 'invalid_token') {
+        showNotification('Invalid confirmation link. Please try subscribing again.', 'error');
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (error === 'confirmation_failed') {
+        showNotification('Confirmation failed. Please try subscribing again.', 'error');
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+})();
