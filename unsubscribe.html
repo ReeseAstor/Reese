@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsubscribe - Reese Astor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .unsubscribe-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+        .unsubscribe-card {
+            background: var(--color-panel);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            text-align: center;
+        }
+        .unsubscribe-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .unsubscribe-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-family: var(--font-serif);
+        }
+        .unsubscribe-message {
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        .unsubscribe-email {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin: 1rem 0;
+        }
+        .unsubscribe-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="unsubscribe-container">
+        <div class="unsubscribe-card" id="unsubscribe-card">
+            <div class="unsubscribe-icon">📧</div>
+            <h1 class="unsubscribe-title">Unsubscribe from Newsletter</h1>
+            <div class="unsubscribe-message" id="message">
+                Processing your request...
+            </div>
+            <div id="email-display" style="display: none;">
+                <div class="unsubscribe-email" id="email-address"></div>
+            </div>
+            <div class="unsubscribe-actions" id="actions" style="display: none;">
+                <button class="btn btn-primary" id="confirm-btn">Confirm Unsubscribe</button>
+                <a href="index.html" class="btn btn-ghost">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        
+        // Get token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        if (!token) {
+            document.getElementById('message').textContent = 'Invalid unsubscribe link. Please check your email for the correct link.';
+            document.getElementById('message').style.color = 'var(--color-text-muted)';
+        } else {
+            // Load subscriber info
+            fetch(`${API_BASE}/api/unsubscribe/${token}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (!data.active) {
+                            // Already unsubscribed
+                            document.getElementById('message').textContent = 'You have already unsubscribed from our newsletter.';
+                            document.getElementById('message').style.color = 'var(--color-text-muted)';
+                        } else {
+                            // Show unsubscribe confirmation
+                            document.getElementById('email-address').textContent = data.email;
+                            document.getElementById('email-display').style.display = 'block';
+                            document.getElementById('actions').style.display = 'flex';
+                            document.getElementById('message').textContent = 'We\'re sorry to see you go! Are you sure you want to unsubscribe?';
+                        }
+                    } else {
+                        document.getElementById('message').textContent = 'Invalid unsubscribe link. Please check your email for the correct link.';
+                        document.getElementById('message').style.color = 'var(--color-text-muted)';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('message').textContent = 'An error occurred. Please try again later.';
+                    document.getElementById('message').style.color = 'var(--color-text-muted)';
+                });
+        }
+        
+        // Handle unsubscribe confirmation
+        document.getElementById('confirm-btn').addEventListener('click', async () => {
+            const card = document.getElementById('unsubscribe-card');
+            card.classList.add('loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/unsubscribe`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ token: token })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('message').textContent = 'You have been successfully unsubscribed. We\'re sorry to see you go!';
+                    document.getElementById('message').style.color = 'var(--color-text-muted)';
+                    document.getElementById('email-display').style.display = 'none';
+                    document.getElementById('actions').style.display = 'none';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                } else {
+                    document.getElementById('message').textContent = data.error || 'An error occurred. Please try again.';
+                    document.getElementById('message').style.color = '#e74c3c';
+                    card.classList.remove('loading');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('message').textContent = 'An error occurred. Please try again later.';
+                document.getElementById('message').style.color = '#e74c3c';
+                card.classList.remove('loading');
+            }
+        });
+    </script>
+</body>
+</html>

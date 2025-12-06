@@ -203,17 +203,37 @@ function initFormHandling() {
                 submitButton.textContent = 'Subscribing...';
             }
             
-            // Simulate API call (replace with actual implementation)
-            setTimeout(function() {
-                showNotification('Thank you for subscribing! Check your email for a confirmation.', 'success');
-                newsletterForm.reset();
-                
+            // API call to subscribe
+            const API_BASE = window.location.origin;
+            fetch(API_BASE + '/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: emailInput.value })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.success) {
+                    showNotification(data.message || 'Thank you for subscribing! Check your email for a confirmation.', 'success');
+                    newsletterForm.reset();
+                } else {
+                    showNotification(data.error || 'An error occurred. Please try again.', 'error');
+                }
+            })
+            .catch(function(error) {
+                console.error('Subscription error:', error);
+                showNotification('An error occurred. Please try again later.', 'error');
+            })
+            .finally(function() {
                 if (submitButton) {
                     submitButton.disabled = false;
                     submitButton.classList.remove('loading');
                     submitButton.textContent = 'Subscribe';
                 }
-            }, 1000);
+            });
         });
     }
     
