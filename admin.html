@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <style>
         .admin-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -15,11 +15,15 @@
             margin-bottom: 2rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .admin-tabs {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
         .admin-tab {
             padding: 0.75rem 1.5rem;
@@ -61,6 +65,17 @@
             color: var(--color-text-muted);
             font-size: 0.9rem;
         }
+        .stat-subvalue {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-top: 0.25rem;
+        }
+        .subscribers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
         .subscribers-list {
             background: var(--color-panel);
             border-radius: var(--radius-sm);
@@ -90,10 +105,15 @@
             border-radius: 12px;
             font-size: 0.85rem;
             font-weight: 500;
+            margin-left: 0.5rem;
         }
         .status-active {
             background: rgba(125, 231, 213, 0.2);
             color: var(--color-tertiary);
+        }
+        .status-pending {
+            background: rgba(248, 215, 164, 0.2);
+            color: #f8d7a4;
         }
         .status-inactive {
             background: rgba(255, 255, 255, 0.1);
@@ -156,6 +176,18 @@
             font-size: 0.85rem;
             color: var(--color-text-muted);
         }
+        .newsletter-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .stat-badge {
+            padding: 0.25rem 0.5rem;
+            background: rgba(125, 231, 213, 0.1);
+            border-radius: 4px;
+            color: var(--color-tertiary);
+        }
         .newsletter-actions {
             display: flex;
             gap: 0.5rem;
@@ -167,6 +199,21 @@
         }
         .btn-danger:hover {
             background: rgba(192, 57, 43, 0.3);
+        }
+        .analytics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .analytics-table th,
+        .analytics-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .analytics-table th {
+            background: var(--color-bg-soft);
+            font-weight: 600;
         }
         .notification {
             position: fixed;
@@ -190,19 +237,39 @@
             border: 1px solid #e74c3c;
             color: #e74c3c;
         }
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .filter-controls select,
+        .filter-controls input {
+            padding: 0.5rem;
+            background: var(--color-bg-soft);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            color: var(--color-text);
+        }
     </style>
 </head>
 <body>
     <div class="admin-container">
         <div class="admin-header">
-            <h1>Newsletter Administration</h1>
-            <p>Manage subscribers and send newsletters</p>
+            <div>
+                <h1>Newsletter Administration</h1>
+                <p>Professional newsletter management system</p>
+            </div>
+            <div>
+                <button class="btn btn-primary" onclick="exportSubscribers()">Export Subscribers</button>
+            </div>
         </div>
 
         <div class="admin-tabs">
             <button class="admin-tab active" data-tab="dashboard">Dashboard</button>
             <button class="admin-tab" data-tab="subscribers">Subscribers</button>
             <button class="admin-tab" data-tab="newsletters">Newsletters</button>
+            <button class="admin-tab" data-tab="analytics">Analytics</button>
         </div>
 
         <!-- Dashboard Panel -->
@@ -215,6 +282,7 @@
                 <div class="stat-card">
                     <div class="stat-label">Active Subscribers</div>
                     <div class="stat-value" id="stat-active">-</div>
+                    <div class="stat-subvalue" id="stat-pending">Pending: -</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Inactive Subscribers</div>
@@ -229,6 +297,17 @@
 
         <!-- Subscribers Panel -->
         <div id="subscribers" class="admin-panel">
+            <div class="subscribers-header">
+                <h2>Subscribers</h2>
+                <div class="filter-controls">
+                    <select id="filter-status" onchange="loadSubscribers()">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="pending">Pending</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
             <div class="subscribers-list" id="subscribers-list">
                 <div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">
                     Loading subscribers...
@@ -246,8 +325,12 @@
                         <input type="text" id="newsletter-subject" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="newsletter-content">Content</label>
-                        <textarea id="newsletter-content" class="form-textarea" required placeholder="Write your newsletter content here..."></textarea>
+                        <label class="form-label" for="newsletter-content">Content (HTML supported)</label>
+                        <textarea id="newsletter-content" class="form-textarea" required placeholder="Write your newsletter content here... You can use HTML tags for formatting."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="newsletter-scheduled">Schedule (optional)</label>
+                        <input type="datetime-local" id="newsletter-scheduled" class="form-input">
                     </div>
                     <button type="submit" class="btn btn-primary">Create Newsletter</button>
                 </form>
@@ -257,6 +340,16 @@
             <div class="newsletter-list" id="newsletter-list">
                 <div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">
                     Loading newsletters...
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Panel -->
+        <div id="analytics" class="admin-panel">
+            <h2 style="margin-bottom: 1rem;">Newsletter Analytics</h2>
+            <div id="analytics-content">
+                <div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">
+                    Loading analytics...
                 </div>
             </div>
         </div>
@@ -285,6 +378,8 @@
                     loadNewsletters();
                 } else if (tabName === 'dashboard') {
                     loadStats();
+                } else if (tabName === 'analytics') {
+                    loadAnalytics();
                 }
             });
         });
@@ -292,12 +387,15 @@
         // Load dashboard stats
         async function loadStats() {
             try {
-                const response = await fetch(`${API_BASE}/api/admin/stats`);
+                const response = await fetch(`${API_BASE}/api/admin/stats`, {
+                    credentials: 'include'
+                });
                 const data = await response.json();
                 
                 if (data.success) {
                     document.getElementById('stat-total').textContent = data.stats.totalSubscribers;
                     document.getElementById('stat-active').textContent = data.stats.activeSubscribers;
+                    document.getElementById('stat-pending').textContent = `Pending: ${data.stats.pendingSubscribers || 0}`;
                     document.getElementById('stat-inactive').textContent = data.stats.inactiveSubscribers;
                     document.getElementById('stat-newsletters').textContent = data.stats.totalNewsletters;
                 }
@@ -310,31 +408,59 @@
         // Load subscribers
         async function loadSubscribers() {
             try {
-                const response = await fetch(`${API_BASE}/api/admin/subscribers`);
+                const filterStatus = document.getElementById('filter-status')?.value || 'all';
+                const response = await fetch(`${API_BASE}/api/admin/subscribers`, {
+                    credentials: 'include'
+                });
                 const data = await response.json();
                 
                 if (data.success) {
                     const list = document.getElementById('subscribers-list');
                     
-                    if (data.subscribers.length === 0) {
-                        list.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">No subscribers yet</div>';
+                    let subscribers = data.subscribers;
+                    if (filterStatus !== 'all') {
+                        if (filterStatus === 'active') {
+                            subscribers = subscribers.filter(s => s.active && s.confirmed);
+                        } else if (filterStatus === 'pending') {
+                            subscribers = subscribers.filter(s => s.active && !s.confirmed);
+                        } else if (filterStatus === 'inactive') {
+                            subscribers = subscribers.filter(s => !s.active);
+                        }
+                    }
+                    
+                    if (subscribers.length === 0) {
+                        list.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">No subscribers found</div>';
                         return;
                     }
                     
-                    list.innerHTML = data.subscribers.map(sub => `
+                    list.innerHTML = subscribers.map(sub => {
+                        let statusClass = 'status-inactive';
+                        let statusText = 'Inactive';
+                        if (sub.active && sub.confirmed) {
+                            statusClass = 'status-active';
+                            statusText = 'Active';
+                        } else if (sub.active && !sub.confirmed) {
+                            statusClass = 'status-pending';
+                            statusText = 'Pending';
+                        }
+                        
+                        return `
                         <div class="subscriber-item">
                             <div>
                                 <div class="subscriber-email">${sub.email}</div>
                                 <div class="subscriber-meta">
                                     Subscribed: ${new Date(sub.subscribedAt).toLocaleDateString()}
+                                    ${sub.confirmedAt ? ` • Confirmed: ${new Date(sub.confirmedAt).toLocaleDateString()}` : ''}
                                     ${sub.unsubscribedAt ? ` • Unsubscribed: ${new Date(sub.unsubscribedAt).toLocaleDateString()}` : ''}
+                                    ${sub.tags && sub.tags.length > 0 ? ` • Tags: ${sub.tags.join(', ')}` : ''}
                                 </div>
                             </div>
-                            <span class="subscriber-status ${sub.active ? 'status-active' : 'status-inactive'}">
-                                ${sub.active ? 'Active' : 'Inactive'}
+                            <span class="subscriber-status ${statusClass}">
+                                ${statusText}
                             </span>
                         </div>
-                    `).join('');
+                    `;
+                    }).join('');
                 }
             } catch (error) {
                 console.error('Error loading subscribers:', error);
@@ -342,10 +468,39 @@
             }
         }
 
+        // Export subscribers
+        async function exportSubscribers() {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/subscribers/export`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `subscribers-${new Date().toISOString().split('T')[0]}.csv`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    showNotification('Subscribers exported successfully', 'success');
+                } else {
+                    showNotification('Error exporting subscribers', 'error');
+                }
+            } catch (error) {
+                console.error('Error exporting subscribers:', error);
+                showNotification('Error exporting subscribers', 'error');
+            }
+        }
+
         // Load newsletters
         async function loadNewsletters() {
             try {
-                const response = await fetch(`${API_BASE}/api/admin/newsletters`);
+                const response = await fetch(`${API_BASE}/api/admin/newsletters`, {
+                    credentials: 'include'
+                });
                 const data = await response.json();
                 
                 if (data.success) {
@@ -356,15 +511,33 @@
                         return;
                     }
                     
-                    list.innerHTML = data.newsletters.map(newsletter => `
+                    // Get stats for analytics
+                    const statsResponse = await fetch(`${API_BASE}/api/admin/stats`, {
+                        credentials: 'include'
+                    });
+                    const statsData = await statsResponse.json();
+                    const newsletterStats = statsData.success ? statsData.stats.newsletterStats || [] : [];
+                    
+                    list.innerHTML = data.newsletters.map(newsletter => {
+                        const stats = newsletterStats.find(s => s.id === newsletter.id) || {};
+                        
+                        return `
                         <div class="newsletter-item">
                             <div class="newsletter-header">
                                 <div>
                                     <div class="newsletter-subject">${newsletter.subject}</div>
                                     <div class="newsletter-meta">
                                         Created: ${new Date(newsletter.createdAt).toLocaleString()}
-                                        ${newsletter.sentAt ? ` • Sent: ${new Date(newsletter.sentAt).toLocaleString()} to ${newsletter.sentCount} subscribers` : ' • Not sent yet'}
+                                        ${newsletter.scheduledAt ? ` • Scheduled: ${new Date(newsletter.scheduledAt).toLocaleString()}` : ''}
+                                        ${newsletter.sentAt ? ` • Sent: ${new Date(newsletter.sentAt).toLocaleString()}` : ' • Not sent yet'}
                                     </div>
+                                    ${newsletter.sentAt ? `
+                                    <div class="newsletter-stats">
+                                        <span class="stat-badge">Sent: ${newsletter.sentCount || 0}</span>
+                                        <span class="stat-badge">Opens: ${stats.openCount || 0} (${stats.openRate || 0}%)</span>
+                                        <span class="stat-badge">Clicks: ${stats.clickCount || 0} (${stats.clickRate || 0}%)</span>
+                                    </div>
+                                    ` : ''}
                                 </div>
                                 <div class="newsletter-actions">
                                     ${!newsletter.sentAt ? `<button class="btn btn-primary" onclick="sendNewsletter('${newsletter.id}')">Send</button>` : ''}
@@ -372,14 +545,67 @@
                                 </div>
                             </div>
                             <div style="margin-top: 1rem; color: var(--color-text-muted);">
-                                ${newsletter.content.substring(0, 200)}${newsletter.content.length > 200 ? '...' : ''}
+                                ${newsletter.content.substring(0, 200).replace(/<[^>]*>/g, '')}${newsletter.content.length > 200 ? '...' : ''}
                             </div>
                         </div>
-                    `).join('');
+                    `;
+                    }).join('');
                 }
             } catch (error) {
                 console.error('Error loading newsletters:', error);
                 showNotification('Error loading newsletters', 'error');
+            }
+        }
+
+        // Load analytics
+        async function loadAnalytics() {
+            try {
+                const statsResponse = await fetch(`${API_BASE}/api/admin/stats`, {
+                    credentials: 'include'
+                });
+                const statsData = await statsResponse.json();
+                
+                if (statsData.success && statsData.stats.newsletterStats) {
+                    const content = document.getElementById('analytics-content');
+                    const stats = statsData.stats.newsletterStats;
+                    
+                    if (stats.length === 0) {
+                        content.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">No newsletter statistics available yet.</div>';
+                        return;
+                    }
+                    
+                    content.innerHTML = `
+                        <table class="analytics-table">
+                            <thead>
+                                <tr>
+                                    <th>Newsletter</th>
+                                    <th>Sent</th>
+                                    <th>Opens</th>
+                                    <th>Open Rate</th>
+                                    <th>Clicks</th>
+                                    <th>Click Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${stats.map(s => `
+                                    <tr>
+                                        <td>${s.subject}</td>
+                                        <td>${s.sentCount}</td>
+                                        <td>${s.openCount}</td>
+                                        <td>${s.openRate}%</td>
+                                        <td>${s.clickCount}</td>
+                                        <td>${s.clickRate}%</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                } else {
+                    document.getElementById('analytics-content').innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--color-text-muted);">No analytics data available.</div>';
+                }
+            } catch (error) {
+                console.error('Error loading analytics:', error);
+                showNotification('Error loading analytics', 'error');
             }
         }
 
@@ -389,6 +615,7 @@
             
             const subject = document.getElementById('newsletter-subject').value;
             const content = document.getElementById('newsletter-content').value;
+            const scheduledAt = document.getElementById('newsletter-scheduled').value;
             
             try {
                 const response = await fetch(`${API_BASE}/api/admin/newsletters`, {
@@ -396,7 +623,12 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ subject, content })
+                    credentials: 'include',
+                    body: JSON.stringify({ 
+                        subject, 
+                        content,
+                        scheduledAt: scheduledAt || null
+                    })
                 });
                 
                 const data = await response.json();
@@ -422,14 +654,16 @@
             
             try {
                 const response = await fetch(`${API_BASE}/api/admin/newsletters/${id}/send`, {
-                    method: 'POST'
+                    method: 'POST',
+                    credentials: 'include'
                 });
                 
                 const data = await response.json();
                 
                 if (data.success) {
-                    showNotification(`Newsletter sent to ${data.sentCount} subscribers!`, 'success');
+                    showNotification(`Newsletter queued for ${data.queuedCount} subscribers!`, 'success');
                     loadNewsletters();
+                    loadStats();
                 } else {
                     showNotification(data.error || 'Error sending newsletter', 'error');
                 }
@@ -447,7 +681,8 @@
             
             try {
                 const response = await fetch(`${API_BASE}/api/admin/newsletters/${id}`, {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    credentials: 'include'
                 });
                 
                 const data = await response.json();
