@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumina — Your Digital Sanctuary</title>
+  <meta name="description" content="A calm, pressure-free space for emotional processing, grounding, and gentle social reintegration.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============================================
+       Animated Mesh Gradient Background
+       ============================================ -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
+
+  <!-- ============================================
+       Welcome / Onboarding Screen
+       ============================================ -->
+  <div class="welcome-screen" role="dialog" aria-label="Welcome">
+    <div class="mesh-bg" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <div class="welcome-card glass-card no-hover" style="position: relative; z-index: 1;">
+      <h1 class="welcome-greeting">Take a deep breath.<br>You are safe here.</h1>
+      <p class="welcome-subtitle">Lumina is your sanctuary. Let's start gently.</p>
+
+      <p class="welcome-label">What brings you here today?</p>
+      <div class="intention-grid">
+        <button class="pill-btn intention-btn" data-intention="calm">Finding calm</button>
+        <button class="pill-btn intention-btn" data-intention="process">Processing feelings</button>
+        <button class="pill-btn intention-btn" data-intention="connect">Wanting connection</button>
+        <button class="pill-btn intention-btn" data-intention="grow">Building confidence</button>
+      </div>
+
+      <div class="welcome-continue">
+        <button class="pill-btn primary welcome-continue-btn">Enter your sanctuary</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       App Shell (Sidebar + Main)
+       ============================================ -->
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">Lumina</div>
+      <p class="sidebar-tagline">Your digital sanctuary</p>
+
+      <nav class="sidebar-nav">
+        <button class="nav-link active" data-screen="sanctuary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Sanctuary</span>
+        </button>
+
+        <button class="nav-link" data-screen="reflection">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          <span>Reflection</span>
+        </button>
+
+        <button class="nav-link" data-screen="resources">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          </svg>
+          <span>Resources</span>
+        </button>
+
+        <button class="nav-link" data-screen="growth">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/>
+            <path d="M12 8v4l2 2"/>
+          </svg>
+          <span>Growth Path</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>A safe space for healing<br>at your own pace.</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- ==========================================
+           Screen: Sanctuary (Dashboard)
+           ========================================== -->
+      <section id="screen-sanctuary" class="screen active visible">
+
+        <!-- Header with ambient orb -->
+        <div class="sanctuary-header glass-card no-hover">
+          <div class="sanctuary-orb" aria-hidden="true"></div>
+          <h1 class="sanctuary-greeting">Welcome back, gentle soul</h1>
+          <p class="sanctuary-date" id="sanctuary-date"></p>
+          <script>
+            document.getElementById('sanctuary-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+          </script>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button class="quick-action-btn quick-overwhelm">
+            <span class="icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+            </span>
+            <span class="label">Feeling overwhelmed?</span>
+            <span class="sublabel">Start a guided breathing exercise</span>
+          </button>
+          <button class="quick-action-btn" onclick="document.querySelector('[data-screen=reflection]').click()">
+            <span class="icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+            </span>
+            <span class="label">Open journal</span>
+            <span class="sublabel">Write freely in your reflection canvas</span>
+          </button>
+          <button class="quick-action-btn" onclick="document.querySelector('[data-screen=growth]').click()">
+            <span class="icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/><path d="M12 8v4l2 2"/></svg>
+            </span>
+            <span class="label">Continue your path</span>
+            <span class="sublabel">Pick up where you left off</span>
+          </button>
+        </div>
+
+        <!-- Mood Selector -->
+        <div class="mood-section glass-card no-hover">
+          <h3>How are you feeling right now?</h3>
+          <div class="mood-slider-container">
+            <div class="mood-track">
+              <div class="mood-thumb" style="left: 50%"></div>
+            </div>
+            <div class="mood-labels">
+              <span>Overwhelmed</span>
+              <span>Uneasy</span>
+              <span>Neutral</span>
+              <span>Calm</span>
+              <span>At peace</span>
+            </div>
+            <div class="mood-label">Neutral</div>
+          </div>
+          <button class="pill-btn overwhelm-trigger" style="display: none; margin: 8px auto 0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+            I need help right now
+          </button>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+          <!-- Daily Prompt -->
+          <div class="glass-card daily-prompt">
+            <h3>Today's Reflection</h3>
+            <p>What is one small thing that brought you comfort today, even for a moment?</p>
+            <button class="prompt-action">
+              Write in your journal
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Audio Widget -->
+          <div class="glass-card audio-widget">
+            <h3>Calming Sounds</h3>
+            <div class="audio-player">
+              <button class="audio-play-btn" aria-label="Play">
+                <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" fill="white"/></svg>
+              </button>
+              <div class="vinyl-graphic" aria-hidden="true"></div>
+              <div class="audio-info">
+                <div class="audio-title">Gentle Rain on Leaves</div>
+                <div class="audio-duration">12 min</div>
+              </div>
+            </div>
+            <div class="audio-progress">
+              <div class="audio-progress-bar"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           Screen: Reflection Canvas
+           ========================================== -->
+      <section id="screen-reflection" class="screen">
+        <div class="reflection-screen">
+          <div class="reflection-date" id="reflection-date"></div>
+          <script>
+            document.getElementById('reflection-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+          </script>
+
+          <div class="editor-area">
+            <textarea class="editor-textarea" placeholder="What's on your mind today?" spellcheck="false"></textarea>
+            <div class="floating-toolbar">
+              <button class="toolbar-btn" title="Bold"><strong>B</strong></button>
+              <button class="toolbar-btn" title="Italic"><em>I</em></button>
+              <button class="toolbar-btn" title="Clear">C</button>
+            </div>
+          </div>
+          <div class="save-indicator"></div>
+
+          <div class="reflection-entries"></div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           Screen: Resource Center
+           ========================================== -->
+      <section id="screen-resources" class="screen">
+        <div class="resource-header">
+          <h2>Resource Center</h2>
+          <p>Grounding exercises, breathwork, and gentle guidance for your journey.</p>
+        </div>
+
+        <div class="resource-filters">
+          <button class="filter-pill active" data-filter="all">All</button>
+          <button class="filter-pill" data-filter="breathwork">Breathwork</button>
+          <button class="filter-pill" data-filter="somatic">Somatic</button>
+          <button class="filter-pill" data-filter="reading">Reading</button>
+          <button class="filter-pill" data-filter="audio">Audio</button>
+        </div>
+
+        <div class="resource-grid">
+          <!-- Card 1: Breathwork -->
+          <div class="glass-card resource-card" data-category="breathwork">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, var(--color-gradient-1), var(--color-primary)); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag breathwork">Breathwork</span>
+              <h4 class="resource-card-title">4-7-8 Calming Breath</h4>
+              <p class="resource-card-meta">3 min guided exercise</p>
+            </div>
+          </div>
+
+          <!-- Card 2: Somatic -->
+          <div class="glass-card resource-card" data-category="somatic">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, var(--color-accent), var(--color-gradient-2)); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag somatic">Somatic</span>
+              <h4 class="resource-card-title">Body Scan for Tension Release</h4>
+              <p class="resource-card-meta">8 min practice</p>
+            </div>
+          </div>
+
+          <!-- Card 3: Reading -->
+          <div class="glass-card resource-card" data-category="reading">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, #B8D8C4, var(--color-gradient-1)); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag reading">Reading</span>
+              <h4 class="resource-card-title">Understanding Your Window of Tolerance</h4>
+              <p class="resource-card-meta">5 min read</p>
+            </div>
+          </div>
+
+          <!-- Card 4: Audio -->
+          <div class="glass-card resource-card audio-type" data-category="audio">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, var(--color-primary), #C4B5D8); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag audio">Audio</span>
+              <h4 class="resource-card-title">Safe Place Visualization</h4>
+              <p class="resource-card-meta">10 min guided audio</p>
+            </div>
+          </div>
+
+          <!-- Card 5: Breathwork -->
+          <div class="glass-card resource-card" data-category="breathwork">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, var(--color-gradient-1), #B8D8C4); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag breathwork">Breathwork</span>
+              <h4 class="resource-card-title">Box Breathing Technique</h4>
+              <p class="resource-card-meta">5 min guided exercise</p>
+            </div>
+          </div>
+
+          <!-- Card 6: Somatic -->
+          <div class="glass-card resource-card" data-category="somatic">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, var(--color-gradient-2), var(--color-accent)); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag somatic">Somatic</span>
+              <h4 class="resource-card-title">5-4-3-2-1 Grounding Exercise</h4>
+              <p class="resource-card-meta">4 min practice</p>
+            </div>
+          </div>
+
+          <!-- Card 7: Reading -->
+          <div class="glass-card resource-card" data-category="reading">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, #B8D8C4, var(--color-gradient-2)); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag reading">Reading</span>
+              <h4 class="resource-card-title">The Gentle Art of Self-Compassion</h4>
+              <p class="resource-card-meta">7 min read</p>
+            </div>
+          </div>
+
+          <!-- Card 8: Audio -->
+          <div class="glass-card resource-card audio-type" data-category="audio">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, #C4B5D8, var(--color-primary)); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag audio">Audio</span>
+              <h4 class="resource-card-title">Rain & Gentle Piano</h4>
+              <p class="resource-card-meta">20 min ambient</p>
+            </div>
+          </div>
+
+          <!-- Card 9: Reading -->
+          <div class="glass-card resource-card" data-category="reading">
+            <div class="resource-card-image">
+              <div class="overlay"></div>
+              <div class="pattern" style="background: linear-gradient(135deg, var(--color-gradient-1), var(--color-accent)); width:100%; height:100%;"></div>
+            </div>
+            <div class="resource-card-body">
+              <span class="resource-card-tag reading">Reading</span>
+              <h4 class="resource-card-title">Navigating Social Anxiety Gently</h4>
+              <p class="resource-card-meta">6 min read</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           Screen: Growth Path
+           ========================================== -->
+      <section id="screen-growth" class="screen">
+        <div class="growth-header">
+          <h2>Your Growth Path</h2>
+          <p>Gentle steps toward connection. Go at your own pace — there is no rush.</p>
+        </div>
+
+        <div class="journey-path">
+          <!-- Journey Line (SVG) -->
+          <svg class="journey-line" style="position:absolute; left:50%; top:0; bottom:0; width:2px; height:100%; transform:translateX(-50%);" aria-hidden="true">
+            <line x1="1" y1="0" x2="1" y2="100%" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="6,6" opacity="0.4"/>
+          </svg>
+
+          <!-- Milestone 1: Completed by default -->
+          <div class="milestone">
+            <div class="milestone-node completed" data-milestone="m1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="6,12 10,16 18,8"/></svg>
+            </div>
+            <div class="milestone-content">
+              <h4 class="milestone-title">Smile at yourself</h4>
+              <p class="milestone-desc">A gentle moment of self-kindness in the mirror.</p>
+              <span class="milestone-badge done">Completed</span>
+            </div>
+          </div>
+
+          <!-- Milestone 2: Active (next up) -->
+          <div class="milestone">
+            <div class="milestone-node active" data-milestone="m2"></div>
+            <div class="milestone-content">
+              <h4 class="milestone-title">Write a kind note to yourself</h4>
+              <p class="milestone-desc">Three things you appreciate about yourself.</p>
+              <span class="milestone-badge current">Current step</span>
+            </div>
+          </div>
+
+          <!-- Milestone 3: Locked -->
+          <div class="milestone">
+            <div class="milestone-node locked" data-milestone="m3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"><rect x="7" y="11" width="10" height="8" rx="2"/><path d="M9 11V8a3 3 0 016 0v3"/></svg>
+            </div>
+            <div class="milestone-content">
+              <h4 class="milestone-title">People-watch for 5 minutes</h4>
+              <p class="milestone-desc">Simply observe others without judgment.</p>
+            </div>
+          </div>
+
+          <!-- Milestone 4: Locked -->
+          <div class="milestone">
+            <div class="milestone-node locked" data-milestone="m4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"><rect x="7" y="11" width="10" height="8" rx="2"/><path d="M9 11V8a3 3 0 016 0v3"/></svg>
+            </div>
+            <div class="milestone-content">
+              <h4 class="milestone-title">Smile at a stranger</h4>
+              <p class="milestone-desc">A moment of shared warmth, nothing more.</p>
+            </div>
+          </div>
+
+          <!-- Milestone 5: Locked -->
+          <div class="milestone">
+            <div class="milestone-node locked" data-milestone="m5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"><rect x="7" y="11" width="10" height="8" rx="2"/><path d="M9 11V8a3 3 0 016 0v3"/></svg>
+            </div>
+            <div class="milestone-content">
+              <h4 class="milestone-title">Say "good morning" to someone</h4>
+              <p class="milestone-desc">Just two words. That's all it takes.</p>
+            </div>
+          </div>
+
+          <!-- Milestone 6: Locked -->
+          <div class="milestone">
+            <div class="milestone-node locked" data-milestone="m6">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"><rect x="7" y="11" width="10" height="8" rx="2"/><path d="M9 11V8a3 3 0 016 0v3"/></svg>
+            </div>
+            <div class="milestone-content">
+              <h4 class="milestone-title">Ask a simple question</h4>
+              <p class="milestone-desc">Practice the rhythm of a micro-conversation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============================================
+       Overwhelm Modal (Full-screen breathing guide)
+       ============================================ -->
+  <div class="overwhelm-modal" role="dialog" aria-label="Guided breathing exercise">
+    <button class="overwhelm-close" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <div class="overwhelm-content">
+      <div class="breathing-circle">
+        <span class="breathing-text">Breathe in...</span>
+      </div>
+      <h2 class="overwhelm-heading">You are safe</h2>
+      <p class="overwhelm-body">
+        Follow the gentle rhythm. Breathe in through your nose for 4 seconds,
+        hold for 2, then slowly exhale through your mouth for 4 seconds.
+        There is no hurry.
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button class="pill-btn overwhelm-to-reflection">Write about it</button>
+        <button class="pill-btn overwhelm-close" style="position:static;">I feel better</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       Exercise Drawer (Growth Path)
+       ============================================ -->
+  <div class="drawer-overlay"></div>
+  <div class="exercise-drawer" role="dialog" aria-label="Exercise details">
+    <button class="drawer-close" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <span class="drawer-tag"></span>
+    <h2 class="drawer-title"></h2>
+    <p class="drawer-body"></p>
+
+    <ol class="drawer-steps"></ol>
+
+    <p class="drawer-encourage"></p>
+
+    <div style="margin-top: 24px; text-align: center;">
+      <button class="pill-btn primary drawer-complete-btn">Mark as complete</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
